@@ -20,13 +20,17 @@ class ClaimPilotAgent:
         print(f"Step 1: Classifying denial for claim {claim.patient_id}")
         analysis = self.classifier.classify(claim)
         
-        print(f"Step 2: Retrieving policies for {analysis.denial_category}")
-        policies = self.retriever.retrieve_policies(
-            procedure_code=claim.procedure_code,
-            diagnosis_codes=claim.diagnosis_codes,
-            denial_category=analysis.denial_category,
-            payer=claim.payer
-        )
+        if analysis.track == "clinical":
+            print(f"Step 2: Retrieving policies for {analysis.denial_category}")
+            policies = self.retriever.retrieve_policies(
+                procedure_code=claim.procedure_code,
+                diagnosis_codes=claim.diagnosis_codes,
+                denial_category=analysis.denial_category,
+                payer=claim.payer
+            )
+        else:
+            print(f"Step 2: Administrative denial detected, skipping RAG policy retrieval.")
+            policies = []
         
         print(f"Step 3 & 4: Generating and refining appeal letter")
         appeal = self.writer.write_appeal(claim, analysis, policies)

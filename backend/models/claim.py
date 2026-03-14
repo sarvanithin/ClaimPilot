@@ -22,6 +22,7 @@ class PolicyReference(BaseModel):
 
 class DenialAnalysis(BaseModel):
     """Agent's analysis of the denial"""
+    track: str = Field(..., description="'clinical' | 'administrative'")
     denial_category: str = Field(..., description="'medical_necessity' | 'coding_error' | 'auth_missing' | 'timely_filing' | 'documentation'")
     denial_code: str = Field(..., description="The CARC code")
     denial_description: str = Field(..., description="Standard description of the CARC code")

@@ -1,6 +1,6 @@
 import json
 from langchain_core.prompts import PromptTemplate
-from langchain_openai import ChatOpenAI
+from langchain_groq import ChatGroq
 from backend.models.claim import Claim, DenialAnalysis, PolicyReference, AppealLetter
 from backend.agent.prompts import APPEAL_GENERATION_PROMPT, SELF_CRITIQUE_PROMPT
 from backend.config import settings
@@ -8,19 +8,17 @@ from backend.config import settings
 class AppealWriter:
     def __init__(self):
         # We need a highly capable model for text generation and self-critique
-        self.llm = ChatOpenAI(
+        self.llm = ChatGroq(
             model=settings.DEFAULT_MODEL,
             temperature=0.2, 
-            max_tokens=300, # optimized token limit
-            api_key=settings.MARTIAN_API_KEY if settings.MARTIAN_API_KEY else "dummy_key",
-            base_url=settings.MARTIAN_BASE_URL,
+            max_tokens=600, # optimized token limit
+            api_key=settings.GROQ_API_KEY if settings.GROQ_API_KEY else "dummy_key",
         )
-        self.critique_llm = ChatOpenAI(
+        self.critique_llm = ChatGroq(
             model=settings.DEFAULT_MODEL,
             temperature=0.0,
-            max_tokens=600, # optimized token limit
-            api_key=settings.MARTIAN_API_KEY if settings.MARTIAN_API_KEY else "dummy_key",
-            base_url=settings.MARTIAN_BASE_URL,
+            max_tokens=1000, # optimized token limit
+            api_key=settings.GROQ_API_KEY if settings.GROQ_API_KEY else "dummy_key",
             model_kwargs={"response_format": {"type": "json_object"}}
         )
         self.appeal_prompt = PromptTemplate(
@@ -29,14 +27,14 @@ class AppealWriter:
             template=APPEAL_GENERATION_PROMPT
         )
         self.critique_prompt = PromptTemplate(
-            input_variables=["draft_letter", "policy_citations"],
+            input_variables=["draft_letter", "policy_citations", "clinical_notes"],
             template=SELF_CRITIQUE_PROMPT
         )
 
     def write_appeal(self, claim: Claim, analysis: DenialAnalysis, policies: list[PolicyReference]) -> AppealLetter:
         """Generates the initial appeal letter, then refines it via self-critique"""
         
-        if not settings.MARTIAN_API_KEY:
+        if not settings.GROQ_API_KEY:
             return self._mock_appeal(claim, analysis)
             
         policy_texts = "\n\n".join([f"[{p.source} - {p.section}]: {p.text}" for p in policies])
@@ -62,7 +60,8 @@ class AppealWriter:
         critique_chain = self.critique_prompt | self.critique_llm
         critique_response = critique_chain.invoke({
             "draft_letter": draft_letter,
-            "policy_citations": policy_texts
+            "policy_citations": policy_texts,
+            "clinical_notes": claim.clinical_notes or "No additional clinical notes provided."
         })
         
         try:

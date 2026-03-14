@@ -29,13 +29,16 @@ Format ONLY the raw text. Use standard business letter formatting with line brea
 SELF_CRITIQUE_PROMPT = """
 DRAFT: {draft_letter}
 POLICIES: {policy_citations}
+CLINICAL NOTES: {clinical_notes}
 
-Critique draft against policies. Fix hallucinations.
+Critique the draft against the policies. Identify any required evidence from the policies that is missing in the clinical notes.
+Score the probability of overturning the denial (0-100) based strictly on whether the clinical notes satisfy the policy requirements.
+
 Respond ONLY with JSON:
 {{
     "critique": "<1 sentence limit>",
     "revised_letter": "<Standard letter format with line breaks. Max 200 words>",
-    "missing_evidence": ["<array of what clinical proof is missing based on policies>"],
-    "success_score_1_to_100": <int between 0 and 100>
+    "missing_evidence": ["<array of missing criteria>"],
+    "success_score_1_to_100": <int reflecting evidence strength>
 }}
 """

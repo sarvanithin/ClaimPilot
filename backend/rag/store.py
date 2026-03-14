@@ -2,7 +2,7 @@ import os
 import chromadb
 from chromadb.config import Settings as ChromaSettings
 from langchain_community.vectorstores import Chroma
-from langchain_openai import OpenAIEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.documents import Document
 from backend.config import settings
 
@@ -20,11 +20,9 @@ class PolicyStore:
         )
 
     def _init_embeddings(self):
-        # Defaulting to OpenAI for embeddings (text-embedding-3-small)
-        # In a real app, this might be configurable
-        self.embeddings = OpenAIEmbeddings(
-            model="text-embedding-3-small", 
-            api_key=settings.OPENAI_API_KEY if settings.OPENAI_API_KEY else "dummy_key"
+        # Defaulting to open-source embeddings to ensure no cost or API keys required
+        self.embeddings = HuggingFaceEmbeddings(
+            model_name="all-MiniLM-L6-v2"
         )
         
     def add_documents(self, documents: list[Document]):

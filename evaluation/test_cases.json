@@ -1,7 +1,7 @@
 [
   {
     "id": "tc_001",
-    "name": "Standard medical necessity denial - diabetes management",
+    "scenario_name": "CO-50 Medical Necessity - Diabetes Management",
     "claim": {
       "patient_id": "P-10042",
       "procedure_code": "99214",
@@ -29,7 +29,7 @@
   },
   {
     "id": "tc_002",
-    "name": "Missing Prior Authorization - Emergency Exception",
+    "scenario_name": "CO-197 Missing Prior Authorization - Emergency Exception",
     "claim": {
       "patient_id": "P-88219",
       "procedure_code": "44140",
@@ -56,7 +56,7 @@
   },
   {
     "id": "tc_003",
-    "name": "Administrative: Duplicate Claim",
+    "scenario_name": "CO-18 Administrative - Duplicate Claim",
     "claim": {
       "patient_id": "P-20231",
       "procedure_code": "99213",
@@ -83,7 +83,7 @@
   },
   {
     "id": "tc_004",
-    "name": "Clinical: Experimental / Investigational",
+    "scenario_name": "CO-151 Clinical - Experimental / Investigational",
     "claim": {
       "patient_id": "P-44910",
       "procedure_code": "81479",
@@ -110,7 +110,7 @@
   },
   {
     "id": "tc_005",
-    "name": "Clinical: Frequency Limit / Max Benefit",
+    "scenario_name": "CO-119 Clinical - Frequency Limit / Max Benefit",
     "claim": {
       "patient_id": "P-55012",
       "procedure_code": "83036",
@@ -137,7 +137,7 @@
   },
   {
     "id": "tc_006",
-    "name": "Administrative: Timely Filing",
+    "scenario_name": "CO-29 Administrative - Timely Filing",
     "claim": {
       "patient_id": "P-66123",
       "procedure_code": "93000",
@@ -164,7 +164,7 @@
   },
   {
     "id": "tc_007",
-    "name": "Administrative: Insufficient Documentation",
+    "scenario_name": "CO-16 Administrative - Insufficient Documentation",
     "claim": {
       "patient_id": "P-77234",
       "procedure_code": "97110",
@@ -191,7 +191,7 @@
   },
   {
     "id": "tc_008",
-    "name": "Clinical: Step Therapy / Failed Conservative Treatment",
+    "scenario_name": "CO-50 Clinical - Step Therapy / Failed Conservative Treatment",
     "claim": {
       "patient_id": "P-88345",
       "procedure_code": "62323",
@@ -220,7 +220,7 @@
   },
   {
     "id": "tc_009",
-    "name": "Administrative: Diagnosis inconsistent with procedure",
+    "scenario_name": "CO-11 Administrative - Diagnosis inconsistent with procedure",
     "claim": {
       "patient_id": "P-99456",
       "procedure_code": "29881",
@@ -246,7 +246,7 @@
   },
   {
     "id": "tc_010",
-    "name": "Clinical: High-cost Specialty Medication",
+    "scenario_name": "CO-50 Clinical - High-cost Specialty Medication",
     "claim": {
       "patient_id": "P-11567",
       "procedure_code": "J2323",

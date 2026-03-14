@@ -6,8 +6,6 @@
 
 ### 🔗 [Live Demo on GitHub Pages](https://sarvanithin.github.io/ClaimPilot/)
 
-*(Update this link after renaming your repository to `ClaimPilot`!)*
-
 ---
 
 ### 📸 Application Demo

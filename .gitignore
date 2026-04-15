@@ -14,7 +14,7 @@ chroma_db/
 # Node
 frontend/node_modules/
 frontend/.npm/
-frontend/dist/
+# frontend/dist/ — tracked for deployment
 
 # OS
 .DS_Store

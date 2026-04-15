@@ -1,4 +1,8 @@
-frontend/
+frontend/node_modules/
+frontend/src/
+frontend/package*.json
+frontend/tsconfig*
+frontend/vite.config*
 tests/
 .git/
 __pycache__/

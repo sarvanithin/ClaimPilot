@@ -1,0 +1,82 @@
+{
+  "UHC": {
+    "name": "UnitedHealthcare",
+    "payer_id": "87726",
+    "timely_filing_days": 180,
+    "rules": [
+      {"id": "uhc-001", "description": "Modifier -25 required for E&M with same-day procedure", "cpt_pattern": "992*", "condition": "same_day_procedure", "severity": "reject"},
+      {"id": "uhc-002", "description": "Prior auth required for CPT 27447 (knee replacement)", "cpt_codes": ["27447"], "condition": "no_prior_auth", "severity": "reject"},
+      {"id": "uhc-003", "description": "Prior auth required for CPT 27130 (hip replacement)", "cpt_codes": ["27130"], "condition": "no_prior_auth", "severity": "reject"},
+      {"id": "uhc-004", "description": "MRI requires prior auth for outpatient setting", "cpt_codes": ["73721", "70553", "74177"], "condition": "no_prior_auth", "severity": "reject"},
+      {"id": "uhc-005", "description": "Colonoscopy screening not covered before age 45 without high-risk dx", "cpt_codes": ["45378", "45380"], "condition": "age_under_45_no_risk", "severity": "reject"},
+      {"id": "uhc-006", "description": "E&M level 5 requires documented high complexity MDM or 40+ min", "cpt_codes": ["99215", "99205"], "condition": "insufficient_documentation", "severity": "warn"},
+      {"id": "uhc-007", "description": "Duplicate claim within 30 days", "cpt_pattern": "*", "condition": "duplicate_30_days", "severity": "reject"},
+      {"id": "uhc-008", "description": "Place of service must match procedure type", "cpt_pattern": "*", "condition": "pos_mismatch", "severity": "reject"},
+      {"id": "uhc-009", "description": "Epidural injection requires conservative therapy documentation", "cpt_codes": ["64483"], "condition": "no_conservative_therapy", "severity": "reject"},
+      {"id": "uhc-010", "description": "Psychotherapy requires licensed provider NPI", "cpt_codes": ["90834", "90837"], "condition": "unlicensed_provider", "severity": "reject"}
+    ]
+  },
+  "Aetna": {
+    "name": "Aetna",
+    "payer_id": "60054",
+    "timely_filing_days": 365,
+    "rules": [
+      {"id": "aet-001", "description": "Modifier -25 required for E&M with same-day procedure", "cpt_pattern": "992*", "condition": "same_day_procedure", "severity": "reject"},
+      {"id": "aet-002", "description": "Prior auth required for all joint replacement surgeries", "cpt_codes": ["27447", "27130"], "condition": "no_prior_auth", "severity": "reject"},
+      {"id": "aet-003", "description": "Arthroscopy requires failed 6 weeks conservative treatment", "cpt_codes": ["29881", "29880"], "condition": "no_conservative_therapy", "severity": "reject"},
+      {"id": "aet-004", "description": "Advanced imaging requires prior auth", "cpt_codes": ["73721", "70553", "74177"], "condition": "no_prior_auth", "severity": "reject"},
+      {"id": "aet-005", "description": "Cholecystectomy requires documented acute or chronic symptoms", "cpt_codes": ["47562", "47563"], "condition": "no_symptom_documentation", "severity": "warn"},
+      {"id": "aet-006", "description": "Duplicate claim within 45 days", "cpt_pattern": "*", "condition": "duplicate_45_days", "severity": "reject"},
+      {"id": "aet-007", "description": "Cataract surgery requires visual acuity documentation", "cpt_codes": ["66984"], "condition": "no_visual_acuity", "severity": "reject"},
+      {"id": "aet-008", "description": "Epidural steroid injection limited to 3 per year", "cpt_codes": ["64483"], "condition": "frequency_exceeded", "severity": "reject"},
+      {"id": "aet-009", "description": "E&M new patient code requires no visit in past 3 years", "cpt_codes": ["99201", "99202", "99203", "99204", "99205"], "condition": "not_new_patient", "severity": "reject"},
+      {"id": "aet-010", "description": "Hernia repair requires documented symptoms", "cpt_codes": ["49505"], "condition": "no_symptom_documentation", "severity": "warn"}
+    ]
+  },
+  "BCBS": {
+    "name": "Blue Cross Blue Shield",
+    "payer_id": "00901",
+    "timely_filing_days": 365,
+    "rules": [
+      {"id": "bcbs-001", "description": "Modifier -25 required for E&M with same-day procedure", "cpt_pattern": "992*", "condition": "same_day_procedure", "severity": "reject"},
+      {"id": "bcbs-002", "description": "Prior auth for knee/hip replacement", "cpt_codes": ["27447", "27130"], "condition": "no_prior_auth", "severity": "reject"},
+      {"id": "bcbs-003", "description": "Step therapy required: PT before knee arthroscopy", "cpt_codes": ["29881", "29880"], "condition": "no_step_therapy", "severity": "reject"},
+      {"id": "bcbs-004", "description": "Cardiac catheterization requires documented non-invasive workup", "cpt_codes": ["93458"], "condition": "no_prior_workup", "severity": "reject"},
+      {"id": "bcbs-005", "description": "Screening colonoscopy covered from age 45", "cpt_codes": ["45378"], "condition": "age_under_45_no_risk", "severity": "reject"},
+      {"id": "bcbs-006", "description": "Outpatient MRI requires prior auth", "cpt_codes": ["73721", "70553"], "condition": "no_prior_auth", "severity": "reject"},
+      {"id": "bcbs-007", "description": "Duplicate claim check within 60 days", "cpt_pattern": "*", "condition": "duplicate_60_days", "severity": "reject"},
+      {"id": "bcbs-008", "description": "Bundled procedures must use appropriate modifiers", "cpt_pattern": "*", "condition": "bundling_error", "severity": "reject"},
+      {"id": "bcbs-009", "description": "Gender-specific procedure validation", "cpt_pattern": "*", "condition": "gender_mismatch", "severity": "reject"},
+      {"id": "bcbs-010", "description": "Age-appropriate procedure validation", "cpt_pattern": "*", "condition": "age_mismatch", "severity": "warn"}
+    ]
+  },
+  "Medicare": {
+    "name": "Medicare",
+    "payer_id": "00882",
+    "timely_filing_days": 365,
+    "rules": [
+      {"id": "med-001", "description": "Modifier -25 required for E&M with same-day procedure", "cpt_pattern": "992*", "condition": "same_day_procedure", "severity": "reject"},
+      {"id": "med-002", "description": "ABN required for non-covered services", "cpt_pattern": "*", "condition": "no_abn", "severity": "reject"},
+      {"id": "med-003", "description": "LCD L35041 medical necessity for knee replacement", "cpt_codes": ["27447"], "condition": "no_medical_necessity", "severity": "reject"},
+      {"id": "med-004", "description": "NCD 220.2 applies to cardiac procedures", "cpt_codes": ["93458"], "condition": "ncd_not_met", "severity": "reject"},
+      {"id": "med-005", "description": "Screening colonoscopy covered every 10 years from age 45", "cpt_codes": ["45378"], "condition": "frequency_exceeded", "severity": "reject"},
+      {"id": "med-006", "description": "Two midnight rule for inpatient admission", "cpt_pattern": "992*", "condition": "observation_not_inpatient", "severity": "warn"},
+      {"id": "med-007", "description": "Modifier -59 required for distinct procedural service", "cpt_pattern": "*", "condition": "bundling_no_modifier", "severity": "reject"},
+      {"id": "med-008", "description": "NCCI edits compliance required", "cpt_pattern": "*", "condition": "ncci_violation", "severity": "reject"},
+      {"id": "med-009", "description": "Home health requires face-to-face encounter", "cpt_pattern": "992*", "condition": "no_face_to_face", "severity": "reject"},
+      {"id": "med-010", "description": "DME requires medical necessity documentation", "cpt_pattern": "*", "condition": "dme_no_documentation", "severity": "reject"}
+    ]
+  },
+  "Medicaid": {
+    "name": "Medicaid",
+    "payer_id": "00112",
+    "timely_filing_days": 180,
+    "rules": [
+      {"id": "mcd-001", "description": "Prior auth required for all surgical procedures", "cpt_pattern": "2*", "condition": "no_prior_auth", "severity": "reject"},
+      {"id": "mcd-002", "description": "Modifier -25 required for E&M with same-day procedure", "cpt_pattern": "992*", "condition": "same_day_procedure", "severity": "reject"},
+      {"id": "mcd-003", "description": "Referral required for specialist visits", "cpt_pattern": "*", "condition": "no_referral", "severity": "reject"},
+      {"id": "mcd-004", "description": "Eligibility must be active on date of service", "cpt_pattern": "*", "condition": "eligibility_inactive", "severity": "reject"},
+      {"id": "mcd-005", "description": "State-specific formulary applies to injections", "cpt_codes": ["96372"], "condition": "not_on_formulary", "severity": "reject"}
+    ]
+  }
+}

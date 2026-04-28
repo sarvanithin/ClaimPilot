@@ -41,6 +41,15 @@ app.include_router(v2_router)
 # Mock FHIR R4 server
 app.include_router(fhir_router)
 
+
+# Seed demo data on startup
+@app.on_event("startup")
+async def _seed_demo_data():
+    from backend.seed_demo import seed_pipeline
+    count = await seed_pipeline()
+    if count:
+        print(f"[ClaimPilot] Seeded {count} demo claims into pipeline")
+
 # Serve frontend static files (production)
 _static_dir = Path(__file__).resolve().parent.parent / "frontend" / "dist"
 if _static_dir.exists():

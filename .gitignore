@@ -16,5 +16,9 @@ frontend/node_modules/
 frontend/.npm/
 # frontend/dist/ — tracked for deployment
 
+# Build artifacts
+claimpilot.egg-info/
+*.egg-info/
+
 # OS
 .DS_Store
